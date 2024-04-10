@@ -1,6 +1,6 @@
 import NavPanel from "./components/navPanel/NavPanel";
 import WelcomePage from "./pages/welcomePage/WelcomePage";
-import AboutUsPage from "./pages/AboutUsPage";
+import AboutUsPage from "./pages/aboutUsPage/AboutUsPage";
 import HomePage from "./pages/homePage/HomePage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 

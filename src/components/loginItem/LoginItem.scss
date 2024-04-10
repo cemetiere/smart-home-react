@@ -9,6 +9,9 @@
   align-items: center;
   gap: 10px;
   color: #efefef;
+  font-size: 1.5em;
+  background-color: #9884d5;
+  border-radius: 50px 0 0 50px;
 }
 .loginButton{
   height: 70%;
@@ -20,7 +23,7 @@
   transition: all 0.3s ease;
   border-radius: 50px;
 
-  background-color: #9c85ce;
+  background-color: #5a5a8d;
   border: none;
   color: rgb(var(--text-color));
   align-items: center;
@@ -28,6 +31,9 @@
 }
 .loginButton:hover{
   transition: all 0.3s ease;
-  box-shadow: #c096fd 0px 0px 20px 0px;
+  box-shadow: #e2d1ff 0px 0px 20px 0px;
+}
+.usernameText{
+  color: #b2ffff;
 }
 
