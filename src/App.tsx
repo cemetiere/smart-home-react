@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import NavPanel from "./components/navPanel/NavPanel";
+
+import WelcomePage from "./pages/welcomePage/WelcomePage";
+import AboutUsPage from "./pages/AboutUsPage";
+import HomePage from "./pages/homePage/HomePage";
 
 function App() {
-  return (
+    const [selected, setSelected] = useState(new Array(5).fill(false))
+
+
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <NavPanel links={['/home', '/aboutUs', '']} titles={['Home', 'About Us', 'Hehe']} selected={selected} setSelected={setSelected}/>
+        {getPage()}
     </div>
-  );
+    );
+
+    function getPage(){
+        if(selected.reduce((acc, el)=>acc||el, false)===false){
+            return <WelcomePage key={Math.random()*100}/>
+        } else {
+            selected.map((el,i)=> {
+                if(selected[i]){
+                    switch (i){
+                        case 0:
+                            if(el===true) {
+                                console.log('home')
+                                return <HomePage key={i*Math.random()*100}/>
+                            }
+                            break;
+                        case 1:
+                            if(el===true) return <AboutUsPage key={i*Math.random()*100}/>
+                            break;
+                    }
+                }
+
+
+            }
+        )}
+    }
 }
 
 export default App;
