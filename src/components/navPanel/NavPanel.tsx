@@ -3,28 +3,33 @@ import './NavPanel.scss'
 import logo from '../../logo.png'
 import NavPanelButton from "./navPanelButton/NavPanelButton";
 import LoginItem from "../loginItem/LoginItem";
-import Modal from "../Modal/Modal";
+import {useNavigate} from "react-router-dom";
 
 interface navPanelProps{
     links: string[],
     titles: string[],
-    selected: boolean[],
-    setSelected:  React.Dispatch<React.SetStateAction<any[]>>
 }
 function NavPanel(props: navPanelProps) {
-    const selected = props.selected;
-    const setSelected = props.setSelected
+    const [selected, setSelected] = useState(new Array(props.links.length).fill(false))
+    const nav = useNavigate();
 
     function goWelcome(){
         setSelected(new Array(selected.length).fill(false))
+        nav("/")
     }
     function select(i: number){
-
-        let modified = selected.slice()
-        modified.forEach((el,j)=>{
-            modified[j] = i === j;
-        })
+        let modified = new Array(props.links.length).fill(false);
+        modified[i] = true;
         setSelected(modified)
+        switch (i) {
+            case 0:
+                nav("/home")
+                break;
+            case 1:
+                nav("/about")
+                break;
+        }
+
     }
     return (
         <div className={'navPanel'}>
