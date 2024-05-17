@@ -4,31 +4,20 @@ import woman from './images/image-1.png'
 import flower from './images/image-2.png'
 import {useAppDispatch} from "../../store/hooks";
 import {setUser} from "../../store/userSlice";
+import { userInfo, userRegisterInfo } from '../../types/types';
 
 interface registerPageProps{
     setIsLogin: Dispatch<SetStateAction<boolean>>
 }
-interface userRegisterInfo{
-    username: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string
-}
-interface userInfo{
-    username: string,
-    token: string
-}
 
 function RegisterPage(props: registerPageProps) {
+    const dispatch = useAppDispatch();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLasName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const dispatch = useAppDispatch()
     let user: userRegisterInfo = {
         username: username,
         password: password,
@@ -39,7 +28,7 @@ function RegisterPage(props: registerPageProps) {
     }
 
     // TODO fetch
-    function register(){
+    const register = () => {
         let response: userInfo = {
             username: user.username,
             token: 'meow'
@@ -50,7 +39,7 @@ function RegisterPage(props: registerPageProps) {
     return (
         <div className="inner">
             <img src={woman} alt="" className="image-1"/>
-            <div className={'registerForm'}>
+            <form className={'registerForm'}>
                 <h3>New Account?</h3>
                 <div className="form-holder">
                     <span className="lnr lnr-user"></span>
@@ -65,7 +54,7 @@ function RegisterPage(props: registerPageProps) {
                 <div className="form-holder">
                     <span className="lnr lnr-user"></span>
                     <input type="text" className="form-control" placeholder="Last name" value={lastName}
-                           onChange={e => setLasName(e.target.value)}/>
+                           onChange={e => setLastName(e.target.value)}/>
                 </div>
                 <div className="form-holder">
                     <span className="lnr lnr-user"></span>
@@ -88,7 +77,7 @@ function RegisterPage(props: registerPageProps) {
                 </button>
                 <span className={'text'}>Or <span className={'link'}
                                                   onClick={() => props.setIsLogin(true)}>sign in</span> if you have an account</span>
-            </div>
+            </form>
             <img src={flower} alt="" className="image-2"/>
 
 

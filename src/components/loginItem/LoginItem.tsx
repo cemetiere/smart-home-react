@@ -15,22 +15,28 @@ function LoginItem() {
     const [active, setActive] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
     const dispatch = useAppDispatch()
+
+    const logOut = () => {
+        let nullUser: userInfo = {
+            username: null,
+            token: null
+        }
+        dispatch(setUser(nullUser))
+    }
+
     return user.username?(
         <div className={'loginItem'}>
-            Logged in as<span className={'usernameText'}>{user.username}</span>
-            <button className={'loginButton'} onClick={()=>{
-                let nullUser: userInfo = {
-                    username: null,
-                    token: null
-                }
-                dispatch(setUser(nullUser))
-            }}>Log out</button>
+            <div className='man'></div>
+            <span className='loginText'><span className={'usernameText'}>{user.username}</span></span>
+            <button className={'loginButton'} onClick={logOut}>Log out</button>
         </div>
     ):
         <div className={'loginItem'}>
-            Login or create new account:
+            <span className='loginText'>
+                Sign in
+            </span>
             <button className={'loginButton'} onClick={()=>setActive(true)}>
-                Authorize
+                    Authorize
             </button>
             <Modal active={active} setActive={setActive}>
                 {isLogin?<LoginPage setIsLogin = {setIsLogin}/>:<RegisterPage setIsLogin = {setIsLogin}/>}

@@ -33,3 +33,12 @@
   background-color: #7e75b0;
   @include button;
 }
+@media  screen and (max-height: 500px) , screen and (max-width: 690px){
+  .navPanelButton{
+    display: none;
+    transition: 0.5s;
+  }
+  .navPanelButtonSelected{
+    background-color: #7e75b000;
+  }
+}

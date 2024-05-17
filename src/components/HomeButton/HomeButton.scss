@@ -1,0 +1,29 @@
+.home-button{
+
+    background-color: #f1e8ff;
+    width: 150px;
+    height: 150px;
+    place-self: center;
+    border-radius: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+.home-button-text{
+    font-size: 25px;
+    font-family: Muli-Regular, serif;
+    color: #0B2D38;
+    transition: 0.3s;
+}
+.home-button:hover{
+    width: 160px;
+    height: 160px;
+    background-color: rgb(236, 255, 254);
+    border: solid 1px rgb(203, 232, 255);
+    transition: 0.3s;
+    .home-button-text{
+        font-size: 27px;
+        transition: 0.3s;
+    }
+}

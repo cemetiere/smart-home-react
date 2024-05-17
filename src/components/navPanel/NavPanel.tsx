@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './NavPanel.scss'
 import logo from '../../logo.png'
 import NavPanelButton from "./navPanelButton/NavPanelButton";
-import LoginItem from "../loginItem/LoginItem";
+import LoginItem from "../LoginItem/LoginItem";
 import {useNavigate} from "react-router-dom";
 
 interface navPanelProps{

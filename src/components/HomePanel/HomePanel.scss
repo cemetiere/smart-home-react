@@ -1,0 +1,40 @@
+.home-panel{
+    border: solid 3px #8383bd;
+    width: 80%;
+    height: 80%;
+    border-radius: 15%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-width: 1000px;
+
+    max-height: 800px;
+}
+.homes-header{
+    display: flex;
+    width: 100%;
+    height: 13%;
+    background-color:#8383bd;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: aliceblue;
+    user-select: none;
+}
+.homes-body{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+    overflow: auto;
+    gap: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+@media  (max-width: 650px){
+    .homes-body{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
