@@ -10,4 +10,16 @@
         height: calc(100vh - 25px);
     }
   }
-  
+
+body{
+    min-height: 500px;
+    min-width: 700px;
+}
+@font-face {
+    font-family: "Muli-Regular";
+    src: url('../fonts/muli/Muli-Regular.ttf');
+}
+@font-face {
+    font-family: "Muli-SemiBold";
+    src: url('../fonts/muli/Muli-SemiBold.ttf');
+}

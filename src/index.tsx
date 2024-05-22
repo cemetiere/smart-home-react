@@ -8,8 +8,8 @@ import './index.css';
 import App from './App';
 import {Provider} from "react-redux";
 import store from './store/store'
-import WelcomePage from "./pages/welcomePage/WelcomePage";
-import RegisterPage from "./pages/registerPage/RegisterPage";
+import WelcomePage from "./pages/WelcomePage/WelcomePage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 
 

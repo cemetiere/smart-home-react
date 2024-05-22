@@ -30,6 +30,7 @@ function RegisterPage(props: registerPageProps) {
     // TODO fetch
     const register = () => {
         let response: userInfo = {
+            userID: 1,
             username: user.username,
             token: 'meow'
         }

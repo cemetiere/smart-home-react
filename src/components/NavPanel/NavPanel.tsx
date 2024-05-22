@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './NavPanel.scss'
-import logo from '../../logo.png'
-import NavPanelButton from "./navPanelButton/NavPanelButton";
+import logo from '../../icons/logo.png'
+import NavPanelButton from "./NavPanelButton/NavPanelButton";
 import LoginItem from "../LoginItem/LoginItem";
 import {useNavigate} from "react-router-dom";
 

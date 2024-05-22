@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
-import woman from "../registerPage/images/image-1.png";
-import flower from "../registerPage/images/image-2.png";
+import woman from "../RegisterPage/images/image-1.png";
+import flower from "../RegisterPage/images/image-2.png";
 import { useAppDispatch } from '../../store/hooks';
 import { userInfo, userLoginInfo } from '../../types/types';
 import { setUser } from '../../store/userSlice';
@@ -19,6 +19,7 @@ function LoginPage(props: loginPageProps) {
     }
     const send = () => {
         const response: userInfo = {
+            userID: 1,
             username: user.username,
             token: "meow"
         }

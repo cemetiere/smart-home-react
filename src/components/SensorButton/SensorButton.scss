@@ -1,0 +1,35 @@
+.sensor-button{
+  width: 99%;
+  height: 100px;
+  min-height: 100px;
+  border-radius: 20px;
+  background-color: rgba(255, 254, 254, 0.89);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border: solid 1px #a1a1a1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+}
+.sensor-button:hover{
+  background-color: rgba(234, 234, 234, 0.34);
+  transition: 0.2s;
+}
+.temperature-icon{
+  width: 100px;
+  padding: 15px;
+}
+.sensor-name{
+  font-size: 2em;
+  align-self: center;
+
+
+}
+.temperature-value{
+  align-self: center;
+  margin-right: 20px;
+  font-size: 2.5em;
+  margin-left: auto;
+  color: rgba(108, 0, 147, 0.61)
+}

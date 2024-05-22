@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import './LoginItem.scss'
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import Modal from "../Modal/Modal";
-import RegisterPage from "../../pages/registerPage/RegisterPage";
-import LoginPage from "../../pages/loginPage/loginPage";
+import Modal from "../../modals/Modal/Modal";
+import RegisterPage from "../../pages/RegisterPage/RegisterPage";
+import LoginPage from "../../pages/LoginPage/LoginPage";
 import {setUser} from "../../store/userSlice";
+import {userInfo} from "../../types/types";
 
-interface userInfo{
-    username: string | null,
-    token: string | null
-}
+
 function LoginItem() {
     const user = useAppSelector((state) => state.user)
     const [active, setActive] = useState(false)
@@ -18,6 +16,7 @@ function LoginItem() {
 
     const logOut = () => {
         let nullUser: userInfo = {
+            userID: 0,
             username: null,
             token: null
         }

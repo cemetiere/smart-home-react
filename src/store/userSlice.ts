@@ -3,8 +3,9 @@ import { userInfo } from "../types/types";
 
 
 const initialState: userInfo = {
-    username: null,
-    token: null
+    userID: 0,
+    username: "1",
+    token: "null"
 }
 
 export const userSlice = createSlice({
@@ -12,6 +13,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<userInfo>) =>{
+            state.userID = action.payload.userID
             state.username = action.payload.username
             state.token = action.payload.token
         }

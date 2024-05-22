@@ -1,0 +1,1 @@
+export const SERVER_URL = "your root url"

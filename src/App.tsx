@@ -1,8 +1,9 @@
-import NavPanel from "./components/navPanel/NavPanel";
-import WelcomePage from "./pages/welcomePage/WelcomePage";
-import AboutUsPage from "./pages/aboutUsPage/AboutUsPage";
-import HomePage from "./pages/homePage/HomePage";
+import NavPanel from "./components/NavPanel/NavPanel";
+import WelcomePage from "./pages/WelcomePage/WelcomePage";
+import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
+import HomePage from "./pages/HomePage/HomePage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import SensorsPage from "./pages/SensorsPage/SensorsPage";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
             <Routes>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/home"} element={<HomePage/>}/>
+                <Route path={"/sensors"} element={<SensorsPage/>}/>
                 <Route path={"/about"} element={<AboutUsPage/>}/>
             </Routes>
         </BrowserRouter>
