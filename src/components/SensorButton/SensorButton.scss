@@ -10,13 +10,42 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-
+  position: relative;
+  .delete-home-button{
+    width: 0px;
+    position: absolute;
+    margin: 0;
+    right: 10px;
+    top:10px;
+  }
+  .setting-device-button{
+    width: 0px;
+    position: absolute;
+    margin: 0;
+    right: 40px;
+    top:10px;
+  }
+}
+.setting-device-button:hover{
+  cursor: pointer;
+  transform: rotate(180deg);
 }
 .sensor-button:hover{
   background-color: rgba(234, 234, 234, 0.34);
   transition: 0.2s;
+  .device-slider{
+    display: block;
+  }
+  .delete-home-button{
+    width: 20px;
+    transition: 0.2s;
+  }
+  .setting-device-button{
+    width: 20px;
+    transition: 0.2s;
+  }
 }
-.temperature-icon{
+.sensor-icon{
   width: 100px;
   padding: 15px;
 }
@@ -33,3 +62,27 @@
   margin-left: auto;
   color: rgba(108, 0, 147, 0.61)
 }
+.device-slider{
+  display: none;
+  width: 0;
+  transition: 0.3s;
+  position: absolute;
+  right: 80px;
+  top: 10px;
+  color: #5a5a8d;
+  text-align: center;
+}
+.device-slider.active{
+  width: 150px;
+  transition: 0.3s;
+}
+
+.device-slider > p{
+  display: none;
+  color: #965c9d;
+}
+.device-slider.active > p{
+  display: block;
+  color: #965c9d;
+}
+

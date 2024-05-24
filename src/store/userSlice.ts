@@ -3,7 +3,7 @@ import { userInfo } from "../types/types";
 
 
 const initialState: userInfo = {
-    userID: 0,
+    userID: "9a0d53d1-2b5e-4e1b-8b92-7873027a46ee",
     username: "1",
     token: "null"
 }

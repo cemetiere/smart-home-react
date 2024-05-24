@@ -1,26 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './HomePanel.scss'
 import AddButton from '../AddButton/AddButton';
 import HomeButton from '../HomeButton/HomeButton';
 import {useAppSelector} from "../../store/hooks";
 import {homesInfo} from "../../types/types";
 import {useNavigate} from "react-router-dom";
+import Modal from "../../modals/Modal/Modal";
+import AddHomePanel from "../AddHomePanel/AddHomePanel";
 
 function HomePanel() {
     const homes: homesInfo = useAppSelector(state => state.homes);
     const nav = useNavigate();
-    function showSensors(homeID: number, homeName: string){
+    const [active, setActive] = useState(false)
+    function showSensors(homeID: string, homeName: string){
         nav("/sensors", {state: {homeID: homeID, homeName: homeName}})
     }
     return (
         <div className='home-panel'>
             <div className='homes-header'>Your Homes</div>
             <div className='homes-body'>
-                {homes.homes.map(home => {
-                    return <HomeButton name={home.home.name} onClick={()=>showSensors(home.home.id, home.home.name)}/>
+                {homes?.homes?.map(home => {
+                    console.log(home)
+                    return <HomeButton homeId={home.home_id} name={home.name} onClick={()=>showSensors(home.home_id, home.name)}/>
                 })}
-                <AddButton/>
+                <AddButton onClick={()=>setActive(true)}/>
             </div>
+            <Modal active={active} setActive={setActive}>
+                <AddHomePanel setActive={setActive}/>
+            </Modal>
         </div>
     );
 }

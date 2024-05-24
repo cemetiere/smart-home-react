@@ -5,14 +5,16 @@ interface SliderProps{
     value: number;
     min: number;
     max: number;
+    text: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
-    onMouseUp?: React.MouseEventHandler<HTMLInputElement>
+    onMouseUp?: React.MouseEventHandler<HTMLInputElement>;
+    className?: string
 }
 
-function Slider(props: SliderProps) {/*w    ww    . d   e  m o 2  s   .  c o   m */
+function Slider(props: SliderProps) {
 
     return (
-        <div className="slider-container">
+        <div className={props.className??"slider-container"} onClick={(e)=>e.stopPropagation()}>
             <input
                 type="range"
                 min={props.min}
@@ -22,7 +24,7 @@ function Slider(props: SliderProps) {/*w    ww    . d   e  m o 2  s   .  c o   m
                 onMouseUp={props.onMouseUp}
                 className="slider"
             />
-            <p className={"slider-text"}>Slider Value: {props.value}</p>
+            <p className={"slider-text"}>{props.text}{" "}{props.value}</p>
         </div>
     );
 }

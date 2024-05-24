@@ -16,7 +16,7 @@ function LoginItem() {
 
     const logOut = () => {
         let nullUser: userInfo = {
-            userID: 0,
+            userID: "0",
             username: null,
             token: null
         }

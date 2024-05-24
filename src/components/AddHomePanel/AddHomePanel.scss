@@ -1,0 +1,48 @@
+
+.modal-panel{
+  align-items: center;
+  gap: 20px;
+
+}
+.modal-title{
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+
+}
+.add-home-button{
+  height: 50px;
+  border-radius: 20px;
+  width: 70%;
+  background-color: rgba(215, 208, 253, 0.93);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2d2033;
+  font-size: 1.5em;
+
+  transition: 0.3s;
+}
+.add-home-button:hover{
+  transition: 0.3s;
+  background-color: #e8d5fd;
+  border: none;
+}
+
+.input-wrapper{
+  width: 25vw;
+  background-color: #5d6aa9;
+  padding-bottom: 5px;
+  border-radius: 100px;
+  .input-labels{
+    color: white;
+  }
+  .input-field{
+    height: 30px;
+    width: 95%;
+    border-radius: 20px;
+    border: none;
+    padding-left: 10px;
+
+  }
+}

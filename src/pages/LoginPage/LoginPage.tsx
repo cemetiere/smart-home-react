@@ -19,7 +19,7 @@ function LoginPage(props: loginPageProps) {
     }
     const send = () => {
         const response: userInfo = {
-            userID: 1,
+            userID: "1",
             username: user.username,
             token: "meow"
         }

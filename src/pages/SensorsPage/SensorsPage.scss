@@ -1,16 +1,18 @@
 @import '../../mixins/mixins';
 
 .back-button{
-
   background-color: #a396ff;
   border-radius: 100%;
   width: 40px;
   height: 40px;
-  margin-left: 7%;
+  margin-left: 50px;
+}
+.cringe{
+  width: 90px;
 }
 .header-text{
-  justify-self: center;
-  margin-left: 30%;
+
+
 }
 .back-button:hover{
   background-color: #d1b9ff;
@@ -22,21 +24,28 @@
 
 .sensors-panel{
   @include base-panel;
-
+  width: 70vw;
+  max-width: 70vw;
+  border-radius: 50px;
+  border-bottom: solid 20px #8282bc;
+  border-left: solid 10px #8282bc;
+  border-right: solid 10px #8282bc;
 }
 .sensors-header{
   @include base-header;
-  display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+
+  width: 100%;
+  justify-content: space-between;
 }
 .sensors-body{
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   overflow: scroll;
+
 }
 .sensor-add{
   width: 99%;
@@ -82,4 +91,24 @@
   width: 100%;
   justify-self: center;
 
+}
+.sensors-devices{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.devices-body{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+.sensors-body::-webkit-scrollbar{
+  width: 10px;
+  height: 0px;
+  background-color: #8282bc;
 }

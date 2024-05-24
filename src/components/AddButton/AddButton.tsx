@@ -2,11 +2,12 @@ import React from 'react';
 import './AddButton.scss'
 
 interface AddButtonProps{
-    className?: string
+    className?: string,
+    onClick?: ()=>void
 }
-function AddButton({className}: AddButtonProps) {
+function AddButton(props: AddButtonProps) {
     return (
-        <div className={`add-button ${className}`} >
+        <div className={`add-button ${props.className}`} onClick={props.onClick} >
             <span className='add-plus-sign'>+</span>
         </div>
     );

@@ -1,1 +1,1 @@
-export const SERVER_URL = "your root url"
+export const SERVER_URL = "http://localhost:8010/proxy"

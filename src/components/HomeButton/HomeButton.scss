@@ -1,5 +1,5 @@
 .home-button{
-
+    position: relative;
     background-color: #f1e8ff;
     width: 150px;
     height: 150px;
@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     transition: 0.3s;
+    text-align: center;
 }
 .home-button-text{
     font-size: 25px;
@@ -17,6 +18,10 @@
     transition: 0.3s;
 }
 .home-button:hover{
+    .delete-home-button{
+        transition: 0.3s;
+        width: 20px;
+    }
     width: 160px;
     height: 160px;
     background-color: rgb(236, 255, 254);
@@ -26,4 +31,16 @@
         font-size: 27px;
         transition: 0.3s;
     }
+}
+.delete-home-button{
+    position: absolute;
+    margin: 0;
+    right: 15px;
+    top:15px;
+    width: 0px;
+}
+.delete-home-button:hover{
+    cursor: pointer;
+    border-radius: 20%;
+    transform: rotate(180deg);
 }

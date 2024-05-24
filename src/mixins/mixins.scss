@@ -2,7 +2,7 @@
   border: solid 3px #8383bd;
   width: 80%;
   height: 80%;
-  border-radius: 15%;
+  border-radius: 10%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -17,10 +17,10 @@
   background-color:#8383bd;
   text-align: center;
   align-items: center;
-  justify-content: center;
   font-size: 30px;
   color: aliceblue;
   user-select: none;
+  justify-content: center;
 }
 @mixin base-body{
   width: 100%;
