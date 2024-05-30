@@ -11,6 +11,7 @@ interface IHomeButtonProps{
     onClick: ()=>void,
     className?: string,
     homeId: string,
+    deletable: boolean
 }
 
 function HomeButton(props: IHomeButtonProps) {
@@ -41,10 +42,12 @@ function HomeButton(props: IHomeButtonProps) {
             e.preventDefault()
             props.onClick();
         }}>
-            <img src={cross} className={'delete-home-button'} onClick={(e)=>{
+            {props.deletable ?
+                <img src={cross} className={'delete-home-button'} onClick={(e) => {
                 e.stopPropagation()
                 onDelete()
-            }}/>
+            }}/>:""}
+
             <span className={`home-button-text`}>{props.name}</span>
         </div>
     );

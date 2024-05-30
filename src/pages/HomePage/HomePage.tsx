@@ -13,7 +13,6 @@ function HomePage() {
     useEffect(() => {
         getHomes(user)
             .then(homes=>{
-                console.log(homes)
                 dispatch(setHomes(homes))
             })
             .catch(error=>console.log(error))

@@ -22,68 +22,83 @@ interface SensorsButtonsProps{
     onClick?: ()=>void,
     event_type: string,
     homeId: string,
-    sensorId: string | undefined,
-    index?: number
+    sensorId: string,
+    index?: number,
+    id: string
 }
 function SensorButton(props: SensorsButtonsProps) {
     const user: userInfo = useAppSelector((state) => state.user)
     const [currentValue, setCurrentValue] = useState(props.value)
-    const [value, setValue]  = useState(20)
     const [settingActive, setSettingActive] = useState(false)
+    const [deviceValue, setDeviceValue] = useState(0)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        setInterval(updateSensor, 10000)
+        if(props.type==="sensor") setInterval(updateSensor, 10000)
+
     }, []);
 
     function updateSensor(){
-        fetch(`${SERVER_URL}/home/${props.homeId}/sensorMonitoring/${props.sensorId}`, {
-            method: "get",
+        if(props.sensorId){
+            fetch(`${SERVER_URL}/home/${props.homeId}/sensorMonitoring/${props.sensorId}`, {
+                method: "get",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then((value: ISensorValue)=>{
+                    setCurrentValue(value.value)
+                    dispatch(setSensorValue({...value, sensorId: props.sensorId, homeId: props.homeId, index: props.index}))
+                })
+                .catch(error=>{
+                    console.log(error)
+                })
+        }
+
+    }
+
+    useEffect(() => {
+        getDeviceState()
+    }, []);
+    function getDeviceState(){
+        if(props.sensorId){
+            fetch(`${SERVER_URL}/home/${props.homeId}/deviceSettings/${props.sensorId}`, {
+                method: "get",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then((response)=>{
+                    // console.log(response)
+                    setDeviceValue(response.value)
+                })
+                .catch(error=>{
+                    console.log(error)
+                })
+        }
+    }
+    function setDeviceState(){
+        fetch(`${SERVER_URL}/home/${props.homeId}/setDeviceState`, {
+            method: "post",
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                device_id: props.sensorId,
+                event_type: props.event_type,
+                action_type: "set",
+                action_value: deviceValue
+            })
         })
-            .then(response => response.json())
-            .then((value: ISensorValue)=>{
-                setCurrentValue(value.value)
-                dispatch(setSensorValue({...value, sensorId: props.sensorId, homeId: props.homeId, index: props.index}))
+            .then((response)=>{
+                console.log(response)
             })
             .catch(error=>{
                 console.log(error)
             })
     }
 
-    function getSensor(){
-        switch (props.event_type) {
-            case "temperature":
-                return (
-                    <>
-                        <img src={temperature} alt={"temp"} className={"sensor-icon"}/>
-                        <div className={"sensor-name"}>{props.name}</div>
-                        <div className={"temperature-value"}>{currentValue ? `${currentValue}°C` :
-                            <img src={require('../../icons/loading.gif')} alt={"loading"} className={"loading-icon"}/>}
-                        </div>
-                    </>
-                )
-            case "light":
-                return (
-                    <>
-                        <img src={light} alt={"light"} className={"sensor-icon"}/>
-                        <div className={"sensor-name"}>{props.name}</div>
-                        <div className={"temperature-value"}>{currentValue ? `${currentValue}%` :
-                            <img src={require('../../icons/loading.gif')} alt={"loading"} className={"loading-icon"}/>}
-                        </div>
-                    </>
-                )
-            case "door":
-                return (
-                    <>
-                        <img src={props.value == 1 ? openLock : lock} alt={"lock"} className={"sensor-icon"}/>
-                        <div className={"sensor-name"}>{props.name}</div>
-                        <div className={"temperature-value"}>{currentValue==1?'Opened':'Closed'}</div>
-                    </>
-                )
-        }
-    }
     function deleteSensor(){
         fetch(`${SERVER_URL}/home/${props.homeId}/deleteSensor/${props.sensorId}`, {
             method: "delete",
@@ -123,6 +138,38 @@ function SensorButton(props: SensorsButtonsProps) {
             })
     }
 
+    function getSensor(){
+        switch (props.event_type) {
+            case "temperature":
+                return (
+                    <>
+                        <img src={temperature} alt={"temp"} className={"sensor-icon"}/>
+                        <div className={"sensor-name"}>{props.name.slice(0,10)}</div>
+                        <div className={"temperature-value"}>{currentValue ? `${Math.ceil(currentValue)}°C` :
+                            <img src={require('../../icons/loading.gif')} alt={"loading"} className={"loading-icon"}/>}
+                        </div>
+                    </>
+                )
+            case "light":
+                return (
+                    <>
+                        <img src={light} alt={"light"} className={"sensor-icon"}/>
+                        <div className={"sensor-name"}>{props.name.slice(0,10)}</div>
+                        <div className={"temperature-value"}>{currentValue ? `${Math.ceil(currentValue)}%` :
+                            <img src={require('../../icons/loading.gif')} alt={"loading"} className={"loading-icon"}/>}
+                        </div>
+                    </>
+                )
+            case "door":
+                return (
+                    <>
+                        <img src={props.value == 1 ? openLock : lock} alt={"lock"} className={"sensor-icon"}/>
+                        <div className={"sensor-name"}>{props.name.slice(0,10)}</div>
+                        <div className={"temperature-value"}>{currentValue==1?'Opened':'Closed'}</div>
+                    </>
+                )
+        }
+    }
     function getDevice() {
         switch (props.event_type) {
             case "temperature":
@@ -130,6 +177,9 @@ function SensorButton(props: SensorsButtonsProps) {
                     <>
                         <img src={fire} alt={"temp"} className={"sensor-icon"}/>
                         <div className={"sensor-name"}>{props.name}</div>
+                        <div className={"temperature-value"}>{Math.ceil(deviceValue)}°C</div>
+                        <Slider value={deviceValue} min={10} max={80} className={`device-slider ${settingActive?'active':""}`} onChange={(e)=>setDeviceValue(+e.target.value)}
+                            onMouseUp={setDeviceState}/>
                     </>
                 )
             case "light":
@@ -137,6 +187,8 @@ function SensorButton(props: SensorsButtonsProps) {
                     <>
                         <img src={light} alt={"temp"} className={"sensor-icon"}/>
                         <div className={"sensor-name"}>{props.name}</div>
+                        <div className={"temperature-value"}>{Math.ceil(deviceValue)}%</div>
+w
                     </>
                 )
             case "door":
@@ -144,11 +196,12 @@ function SensorButton(props: SensorsButtonsProps) {
                     <>
                         <img src={door} alt={"lock"} className={"sensor-icon"}/>
                         <div className={"sensor-name"}>{props.name}</div>
-
+                        <div className={"temperature-value"}>{deviceValue==1?'Opened':'Closed'}</div>
                     </>
                 )
         }
     }
+
     return props.type === "sensor" ?
     (
         <div className={'sensor-button'} onClick={props.onClick}>
@@ -159,9 +212,12 @@ function SensorButton(props: SensorsButtonsProps) {
             }}/>
         </div>
     ): (
-            <div className={'sensor-button'} onClick={props.onClick} onMouseLeave={()=>setSettingActive(false)}>
+            <div className={'sensor-button'} onClick={ ()=> {
+                if(props.onClick)props.onClick();
+                setSettingActive(false)
+            }
+            } onMouseLeave={()=>setSettingActive(false)}>
                 {getDevice()}
-                <Slider value={value} min={10} max={80} text={"Value:"} className={`device-slider ${settingActive?'active':""}`} onChange={(e)=>setValue(+e.target.value)}/>
                 <img src={gear} className={'setting-device-button'} onClick={(e) => {
                     setSettingActive(!settingActive)
                     e.stopPropagation()

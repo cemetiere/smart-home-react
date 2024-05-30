@@ -36,18 +36,19 @@ function SensorsPage(props: SensorsProps) {
     const home = homes.homes.find(home=> home.home_id === homeID);
     const nav = useNavigate();
     const [interval, setInterval] = useState(100)
-    const [currentSensor, setCurrentSensor] = useState<ISensor|IDevice>()
+    const [currentSensor, setCurrentSensor] = useState<ISensor|IDevice>();
+    const [deviceSensors, setDeviceSensors] = useState<ISensor>()
     const chart: any = useRef();
     const user: userInfo = useAppSelector((state) => state.user)
     const dispatch = useAppDispatch()
-
+    const [sensorToDeviceID, setSensorToDeviceID] = useState("")
     const [name, setName] = useState("")
     const [eventType, setEventType] = useState("temperature")
     const [unitsType, setUnitsType] = useState("celsius")
-
-    // useEffect(()=>{
-    //     changeInterval(interval)
-    // },[])
+    const [deviceModal, setDeviceModal] = useState(false)
+    useEffect(()=>{
+        changeInterval(interval)
+    }, [currentSensor])
     function changeInterval(value: number){
         fetch(`${SERVER_URL}/home/${homeID}/history/${currentSensor?.id}?interval=${value}`, {
             headers: {
@@ -58,9 +59,9 @@ function SensorsPage(props: SensorsProps) {
             .then((history: IHistory)=>{
                 const currentChart = chart.current.chart;
                 currentChart.series[0].update({
-                    data: history.history.value.map(Number),
+                    data: history.history.value.map(Number).reverse(),
                 });
-                currentChart.update({xAxis: {categories: history.history.received_at}})
+                currentChart.update({xAxis: {categories: history.history.received_at.reverse()}})
             })
             .catch(error=>{
                 console.log(error.message)
@@ -118,6 +119,49 @@ function SensorsPage(props: SensorsProps) {
                 console.log(error.message)
             })
     }
+    function connectSensorToDevice(){
+        if(sensorToDeviceID=="0"){
+            alert("Choose sensor at first");
+            return
+        }
+        console.log(JSON.stringify({
+            device_id: currentSensor?.id,
+            sensor_id: sensorToDeviceID,
+        }))
+        fetch(`${SERVER_URL}/home/${homeID}/connect`, {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                device_id: currentSensor?.id,
+                sensor_id: sensorToDeviceID,
+            })
+        })
+            .then(response => {
+                alert("connected")
+                setDeviceModal(false)
+            })
+            .catch(error=>{
+                console.log(error.message)
+            })
+    }
+    function getDeviceSensors(id: string){
+
+        fetch(`${SERVER_URL}/home/${homeID}/getDeviceSensors/${id}`, {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(response => {
+            setDeviceSensors(response.sensor)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
 
     function navigateHomes(){
         nav("/home")
@@ -135,7 +179,7 @@ function SensorsPage(props: SensorsProps) {
                         <span style={{marginTop: "10px"}}>Sensors</span>
                         {home?.sensors?.map((sensor: ISensor, i) => <SensorButton key={i*i} index={i} homeId={homeID} sensorId={sensor.id} type={"sensor"} value={sensor?.monitoring?.value}
                                                                                   event_type={sensor.event_type}
-                                                                                  name={sensor.name} onClick={() => {
+                                                                                  name={sensor.name} id={sensor.id} onClick={() => {
                             setCurrentSensor(sensor)
                             setActive(true)
                         }}/>)}
@@ -148,9 +192,11 @@ function SensorsPage(props: SensorsProps) {
                         {home?.devices?.map((device: IDevice, i) => <SensorButton key={i*i*i} homeId={homeID} sensorId={device.id}
                                                                                   type={"device"}
                                                                                   event_type={device.event_type}
-                                                                                  name={device.name} onClick={() => {
-                            setCurrentSensor(device)
-                            setActive(true)
+                                                                                  name={device.name} id={device.id} onClick={()=>{
+                              getDeviceSensors(device.id)
+                              setCurrentSensor(device);
+                              setSensorToDeviceID("0");
+                              setDeviceModal(true)
                         }}/>)}
                         <div className={"sensor-add"} onClick={() => setActiveAddModal2(true)}>
                             <div className={'sensor-add-text'}>Add new device</div>
@@ -161,12 +207,35 @@ function SensorsPage(props: SensorsProps) {
 
 
             </div>
+            <Modal active={deviceModal} setActive={setDeviceModal}>
+                <div className={'modal-panel'}>
+                    <div className={'modal-title'}>Add sensor to {currentSensor?.name}</div>
+                    {deviceSensors?
+                        <SensorButton homeId={homeID} sensorId={deviceSensors?.id} type={"sensor"} value={deviceSensors?.monitoring?.value}
+                                                 event_type={deviceSensors.event_type}
+                                                 name={deviceSensors.name} id={deviceSensors.id} onClick={() => {
+                        setActive(true)
+                    }}/>: ""}
+
+                    <div className={'input-wrapper'}>
+                        <p className={"input-labels"}>Sensor</p>
+                        <select className={"input-field"} value={sensorToDeviceID}
+
+                                onChange={e => setSensorToDeviceID(e.target.value)}>
+                            <option value={0}>None</option>
+                            {home?.sensors.filter((sensor)=>sensor.event_type===currentSensor?.event_type).map(val =>
+                                <option value={val.id}>{val.name}</option>)}
+                        </select>
+                    </div>
+                    <div className={"add-home-button"} onClick={connectSensorToDevice}>Connect</div>
+                </div>
+            </Modal>
             <Modal active={activeAddModal} setActive={setActiveAddModal}>
                 <div className={'modal-panel'}>
                     <div className={'modal-title'}>Add new sensor to {homeName}</div>
                     <div className={'input-wrapper'}>
                         <p className={"input-labels"}>Name</p>
-                        <input value={name} onChange={event => setName(event.target.value)} className={"input-field"}
+                        <input value={name} maxLength={10} onChange={event => setName(event.target.value)} className={"input-field"}
                                type={"text"} placeholder={"Home name"}/>
                     </div>
                     <div className={'input-wrapper'}>
@@ -196,7 +265,7 @@ function SensorsPage(props: SensorsProps) {
                     <div className={'modal-title'}>Add new device to {homeName}</div>
                     <div className={'input-wrapper'}>
                         <p className={"input-labels"}>Name</p>
-                        <input value={name} onChange={event => setName(event.target.value)} className={"input-field"}
+                        <input value={name} maxLength={10} onChange={event => setName(event.target.value)} className={"input-field"}
                                type={"text"} placeholder={"Home name"}/>
                     </div>
                     <div className={'input-wrapper'}>
@@ -209,12 +278,11 @@ function SensorsPage(props: SensorsProps) {
                         </select>
                     </div>
                     <div className={"add-home-button"} onClick={addDevice}>Add</div>
-
                 </div>
             </Modal>
             <Modal active={active} setActive={setActive}>
                 <div className={'modal-panel'}>
-                    <div className={'modal-title'}>Temperature history</div>
+                    <div className={'modal-title'}>History</div>
                     <div className={'highchart-wrapper'}>
                         <HighchartsReact ref={chart} highcharts={Highcharts} options={HISTORY_CHART_OPTIONS}/>
                     </div>

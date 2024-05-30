@@ -1,0 +1,62 @@
+.scenario-item{
+  width: 45vw;
+  height: 50px;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  .scenario-name{
+    color: #8a8a8a;
+    font-size: 2em;
+    margin-left: 10px;
+  }
+  .scenario-info{
+    margin-left: 20px;
+    color: #b4b4b4;
+  }
+  .delete-home-button{
+    width: 0px;
+    position: absolute;
+    margin: 0;
+    right: 15px;
+    top:15px;
+  }
+  .activate-button{
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    border-radius: 5px;
+    border: solid 1px #9e6baf;
+    cursor: pointer;
+    background-color: #f87373;
+    color: #3c3c56;
+    font-weight: bolder;
+  }
+  .activate-button.active{
+    background-color: #c6ffb9;
+    color: #9262ab;
+
+  }
+}
+.scenario-item:hover{
+  .delete-home-button{
+    width: 20px;
+    transition: 0.2s;
+  }
+}
+.scenario-item.active{
+  background-color: #f0ebfd;
+  .scenario-name.active{
+    color: #714385;
+  }
+  .scenario-info.active{
+    color: #696969;
+  }
+}

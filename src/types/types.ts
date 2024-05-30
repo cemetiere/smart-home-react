@@ -31,6 +31,7 @@ export interface ISensor{
     id: string;
     name: string;
     event_type: string;
+    units_type?: string;
     monitoring: {
         id: string,
         received_at: string,
@@ -57,3 +58,15 @@ export interface IDevice{
     event_type: string
 }
 
+export interface IScenario{
+    id: string,
+    sensor_id: string,
+    home_id: string,
+    device_id: string,
+    name: string,
+    condition_type: string,
+    condition_value: number,
+    action_type: string,
+    action_value: number,
+    is_active: boolean
+}

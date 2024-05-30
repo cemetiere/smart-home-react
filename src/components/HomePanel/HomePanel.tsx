@@ -20,8 +20,7 @@ function HomePanel() {
             <div className='homes-header'>Your Homes</div>
             <div className='homes-body'>
                 {homes?.homes?.map(home => {
-                    console.log(home)
-                    return <HomeButton homeId={home.home_id} name={home.name} onClick={()=>showSensors(home.home_id, home.name)}/>
+                    return <HomeButton deletable={true} homeId={home.home_id} name={home.name} onClick={()=>showSensors(home.home_id, home.name)}/>
                 })}
                 <AddButton onClick={()=>setActive(true)}/>
             </div>

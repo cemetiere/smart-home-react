@@ -5,7 +5,7 @@ interface SliderProps{
     value: number;
     min: number;
     max: number;
-    text: string
+    text?: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onMouseUp?: React.MouseEventHandler<HTMLInputElement>;
     className?: string

@@ -31,7 +31,7 @@
   transform: rotate(180deg);
 }
 .sensor-button:hover{
-  background-color: rgba(234, 234, 234, 0.34);
+  background-color: rgb(241, 241, 241);
   transition: 0.2s;
   .device-slider{
     display: block;
@@ -73,16 +73,17 @@
   text-align: center;
 }
 .device-slider.active{
-  width: 150px;
+  .min-max{
+    display: block;
+  }
+  display: flex;
+  flex-direction: row;
+  width: 20%;
   transition: 0.3s;
 }
 
 .device-slider > p{
   display: none;
-  color: #965c9d;
 }
-.device-slider.active > p{
-  display: block;
-  color: #965c9d;
-}
+
 

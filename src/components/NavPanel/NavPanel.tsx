@@ -23,10 +23,13 @@ function NavPanel(props: navPanelProps) {
         setSelected(modified)
         switch (i) {
             case 0:
-                nav("/home")
+                nav(props.links[0])
                 break;
             case 1:
-                nav("/about")
+                nav(props.links[1])
+                break;
+            case 2:
+                nav(props.links[2])
                 break;
         }
 
